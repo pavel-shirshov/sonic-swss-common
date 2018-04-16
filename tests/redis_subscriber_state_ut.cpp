@@ -2,6 +2,7 @@
 #include <memory>
 #include <thread>
 #include <algorithm>
+#include <numeric>
 #include "gtest/gtest.h"
 #include "common/dbconnector.h"
 #include "common/select.h"
@@ -122,14 +123,12 @@ static void producerWorker(int index)
     }
 }
 
-static void subscriberWorker(int index, int *status)
+static void subscriberWorker(int index, int *status, int *added, int *removed)
 {
     DBConnector db(TEST_DB, dbhost, dbport, 0);
     SubscriberStateTable c(&db, testTableName);
     Select cs;
     Selectable *selectcs;
-    int numberOfKeysSet = 0;
-    int numberOfKeyDeleted = 0;
     int ret, i = 0;
     KeyOpFieldsValuesTuple kco;
 
@@ -142,12 +141,12 @@ static void subscriberWorker(int index, int *status)
         c.pop(kco);
         if (kfvOp(kco) == "SET")
         {
-            numberOfKeysSet++;
+            (*added)++;
             validateFields(kfvKey(kco), kfvFieldsValues(kco));
         }
         else if (kfvOp(kco) == "DEL")
         {
-            numberOfKeyDeleted++;
+            (*removed)++;
         }
 
         if ((i++ % 100) == 0)
@@ -155,14 +154,7 @@ static void subscriberWorker(int index, int *status)
             cout << "-" << flush;
         }
 
-        if (numberOfKeyDeleted == NUMBER_OF_OPS)
-        {
-            break;
-        }
-
     }
-
-    EXPECT_LE(numberOfKeysSet, numberOfKeyDeleted);
 
     /* Verify that all data are read */
     {
@@ -344,11 +336,13 @@ TEST(SubscriberStateTable, one_producer_multiple_subscriber)
     cout << "Starting " << NUMBER_OF_THREADS << " subscribers on redis" << endl;
 
     int status[NUMBER_OF_THREADS] = { 0 };
+    int added[NUMBER_OF_THREADS] = { 0 };
+    int removed[NUMBER_OF_THREADS] = { 0 };
 
     /* Starting the subscribers before the producer */
     for (int i = 0; i < NUMBER_OF_THREADS; i++)
     {
-        subscriberThreads[i] = new thread(subscriberWorker, i, status);
+        subscriberThreads[i] = new thread(subscriberWorker, i, status, &added[i], &removed[i]);
     }
 
     int i = 0;
@@ -372,5 +366,12 @@ TEST(SubscriberStateTable, one_producer_multiple_subscriber)
         subscriberThreads[i]->join();
         delete subscriberThreads[i];
     }
+
+    int total_added = std::accumulate(added, added + NUMBER_OF_THREADS, 0);
+    int total_removed = std::accumulate(removed, removed + NUMBER_OF_THREADS, 0);;
+
+    EXPECT_EQ(total_added, NUMBER_OF_OPS * NUMBER_OF_THREADS);
+    EXPECT_EQ(total_removed, NUMBER_OF_OPS * NUMBER_OF_THREADS);
+
     cout << endl << "Done." << endl;
 }
