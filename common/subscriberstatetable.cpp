@@ -26,7 +26,7 @@ SubscriberStateTable::SubscriberStateTable(DBConnector *db, string tableName, in
     vector<string> keys;
     m_table.getKeys(keys);
 
-    for (auto key: keys)
+    for (const auto& key: keys)
     {
         KeyOpFieldsValuesTuple kco;
 
@@ -97,7 +97,7 @@ void SubscriberStateTable::pops(deque<KeyOpFieldsValuesTuple> &vkco, string /*pr
         return;
     }
 
-    while (auto event = popEventBuffer())
+    while (const auto& event = popEventBuffer())
     {
         KeyOpFieldsValuesTuple kco;
         /* if the Key-space notification is empty, try next one. */
