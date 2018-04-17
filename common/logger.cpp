@@ -1,19 +1,19 @@
 #include "logger.h"
 
 #include <algorithm>
-#include <stdarg.h>
-#include <stdio.h>
+#include <cstdarg>
+#include <cstdio>
 #include <syslog.h>
 #include <fstream>
 #include <sstream>
 #include <iomanip>
 #include <stdexcept>
-#include <schema.h>
-#include <select.h>
-#include <dbconnector.h>
-#include <redisclient.h>
-#include <consumerstatetable.h>
-#include <producerstatetable.h>
+#include "schema.h"
+#include "select.h"
+#include "dbconnector.h"
+#include "redisclient.h"
+#include "consumerstatetable.h"
+#include "producerstatetable.h"
 
 namespace swss {
 
@@ -151,7 +151,7 @@ Logger::Priority Logger::getMinPrio()
     return getInstance().m_minPrio;
 }
 
-[[ noreturn ]] void Logger::settingThread()
+void Logger::settingThread()
 {
     Select select;
     DBConnector db(LOGLEVEL_DB, DBConnector::DEFAULT_UNIXSOCKET, 0);
