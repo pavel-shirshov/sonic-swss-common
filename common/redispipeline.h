@@ -37,7 +37,7 @@ public:
                 m_expectedTypes.push(expectedType);
                 m_remaining++;
                 mayflush();
-                return NULL;
+                return nullptr;
             }
             default:
             {
@@ -61,7 +61,7 @@ public:
     // The caller is responsible to release the reply object
     redisReply *pop()
     {
-        if (m_remaining == 0) return NULL;
+        if (m_remaining == 0) return nullptr;
 
         redisReply *reply;
         redisGetReply(m_db->getContext(), reinterpret_cast<void**>(&reply));

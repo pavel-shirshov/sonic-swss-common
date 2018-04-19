@@ -67,7 +67,7 @@ vector<string> RedisClient::keys(string key)
 
     vector<string> list;
     for (unsigned int i = 0; i < ctx->elements; i++)
-        list.push_back(ctx->element[i]->str);
+        list.emplace_back(ctx->element[i]->str);
 
     return list;
 }
@@ -97,7 +97,7 @@ shared_ptr<string> RedisClient::get(string key)
     
     if (reply->type == REDIS_REPLY_NIL)
     {
-        return shared_ptr<string>(NULL);
+        return shared_ptr<string>(nullptr);
     }
 
     if (reply->type == REDIS_REPLY_STRING)
@@ -118,7 +118,7 @@ shared_ptr<string> RedisClient::hget(string key, string field)
 
     if (reply->type == REDIS_REPLY_NIL)
     {
-        return shared_ptr<string>(NULL);
+        return shared_ptr<string>(nullptr);
     }
 
     if (reply->type == REDIS_REPLY_STRING)
@@ -148,7 +148,7 @@ shared_ptr<string> RedisClient::blpop(string list, int timeout)
 
     if (reply->type == REDIS_REPLY_NIL)
     {
-        return shared_ptr<string>(NULL);
+        return shared_ptr<string>(nullptr);
     }
 
     if (reply->type == REDIS_REPLY_STRING)

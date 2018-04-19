@@ -51,7 +51,7 @@ std::string MacAddress::to_string(const uint8_t* mac)
 // The mac address separators could be either ':' or '-'
 bool MacAddress::parseMacString(const string& str_mac, uint8_t* bin_mac)
 {
-    if (bin_mac == NULL)
+    if (bin_mac == nullptr)
     {
         return false;
     }

@@ -14,7 +14,7 @@ public:
     SubscriberStateTable(DBConnector *db, std::string tableName, int popBatchSize = DEFAULT_POP_BATCH_SIZE, int pri = 0);
 
     /* Get all elements available */
-    void pops(std::deque<KeyOpFieldsValuesTuple> &vkco, std::string prefix = EMPTY_PREFIX);
+    void pops(std::deque<KeyOpFieldsValuesTuple> &vkco, std::string prefix = EMPTY_PREFIX) override;
 
     /* Read keyspace event from redis */
     void readData() override;

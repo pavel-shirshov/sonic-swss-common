@@ -114,7 +114,7 @@ private:
 
     static void swssPrioNotify(std::string component, std::string prioStr);
     static void swssOutputNotify(std::string component, std::string outputStr);
-    void settingThread();
+    [[ noreturn ]]  void settingThread();
 
     LogSettingChangeObservers m_settingChangeObservers;
     std::map<std::string, std::string> m_currentPrios;

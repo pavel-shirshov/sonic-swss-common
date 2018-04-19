@@ -1,5 +1,5 @@
-#include <stdio.h>
-#include <string.h>
+#include <cstdio>
+#include <cstring>
 #include <sys/time.h>
 #include <sys/types.h>
 #include <unistd.h>

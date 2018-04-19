@@ -1,4 +1,4 @@
-#include <stdlib.h>
+#include <cstdlib>
 #include <tuple>
 #include "common/redisreply.h"
 #include "common/producertable.h"

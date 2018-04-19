@@ -27,7 +27,7 @@ int exec(const string &cmd, string &stdout)
     stdout.clear();
     while (!feof(pipe))
     {
-        if (fgets(buffer.data(), buffsz, pipe) != NULL)
+        if (fgets(buffer.data(), buffsz, pipe) != nullptr)
         {
             stdout += buffer.data();
         }

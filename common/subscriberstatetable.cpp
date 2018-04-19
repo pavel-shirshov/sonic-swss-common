@@ -170,7 +170,7 @@ shared_ptr<RedisReply> SubscriberStateTable::popEventBuffer()
 {
     if (m_keyspace_event_buffer.empty())
     {
-        return NULL;
+        return nullptr;
     }
 
     auto reply = m_keyspace_event_buffer.front();

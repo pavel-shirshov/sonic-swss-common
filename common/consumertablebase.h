@@ -12,7 +12,7 @@ public:
 
     ConsumerTableBase(DBConnector *db, std::string tableName, int popBatchSize = DEFAULT_POP_BATCH_SIZE, int pri = 0);
 
-    virtual ~ConsumerTableBase();
+    virtual ~ConsumerTableBase() = default;
 
     void pop(KeyOpFieldsValuesTuple &kco, std::string prefix = EMPTY_PREFIX);
 

@@ -1,4 +1,4 @@
-#include <stdlib.h>
+#include <cstdlib>
 #include <tuple>
 #include <sstream>
 #include <utility>
@@ -59,7 +59,7 @@ void ProducerStateTable::set(string key, vector<FieldValueTuple> &values,
 {
     // Assembly redis command args into a string vector
     vector<string> args;
-    args.push_back("EVALSHA");
+    args.emplace_back("EVALSHA");
     args.push_back(m_shaSet);
     args.push_back(to_string(values.size() + 2));
     args.push_back(getChannelName());
@@ -67,7 +67,7 @@ void ProducerStateTable::set(string key, vector<FieldValueTuple> &values,
 
     args.insert(args.end(), values.size(), getKeyName(key));
 
-    args.push_back("G");
+    args.emplace_back("G");
     args.push_back(key);
     for (const auto& iv: values)
     {
@@ -81,7 +81,7 @@ void ProducerStateTable::set(string key, vector<FieldValueTuple> &values,
 
     // Invoke redis command
     RedisCommand command;
-    command.formatArgv((int)args1.size(), &args1[0], NULL);
+    command.formatArgv((int)args1.size(), &args1[0], nullptr);
     m_pipe->push(command, REDIS_REPLY_NIL);
     if (!m_buffered)
     {
@@ -93,15 +93,15 @@ void ProducerStateTable::del(string key, string op /*= DEL_COMMAND*/, string pre
 {
     // Assembly redis command args into a string vector
     vector<string> args;
-    args.push_back("EVALSHA");
+    args.emplace_back("EVALSHA");
     args.push_back(m_shaDel);
-    args.push_back("3");
+    args.emplace_back("3");
     args.push_back(getChannelName());
     args.push_back(getKeySetName());
     args.push_back(getKeyName(key));
-    args.push_back("G");
+    args.emplace_back("G");
     args.push_back(key);
-    args.push_back("''");
+    args.emplace_back("''");
 
     // Transform data structure
     vector<const char *> args1;
@@ -109,7 +109,7 @@ void ProducerStateTable::del(string key, string op /*= DEL_COMMAND*/, string pre
 
     // Invoke redis command
     RedisCommand command;
-    command.formatArgv((int)args1.size(), &args1[0], NULL);
+    command.formatArgv((int)args1.size(), &args1[0], nullptr);
     m_pipe->push(command, REDIS_REPLY_NIL);
     if (!m_buffered)
     {

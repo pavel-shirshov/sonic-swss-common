@@ -1,5 +1,5 @@
-#include <string.h>
-#include <errno.h>
+#include <cstring>
+#include <cerrno>
 #include <system_error>
 #include <netlink/route/link.h>
 #include "common/logger.h"
@@ -23,7 +23,7 @@ LinkCache::LinkCache()
     {
         SWSS_LOG_ERROR("Unable to connect netlink socket: %s", nl_geterror(err));
         nl_socket_free(m_nl_sock);
-        m_nl_sock = NULL;
+        m_nl_sock = nullptr;
         throw system_error(make_error_code(errc::address_not_available),
                            "Unable to connect netlink socket");
     }
@@ -34,7 +34,7 @@ LinkCache::LinkCache()
         SWSS_LOG_ERROR("Unable to allocate link cache: %s", nl_geterror(err));
         nl_close(m_nl_sock);
         nl_socket_free(m_nl_sock);
-        m_nl_sock = NULL;
+        m_nl_sock = nullptr;
         throw system_error(make_error_code(errc::address_not_available),
                            "Unable to connect netlink socket");
     }
@@ -42,7 +42,7 @@ LinkCache::LinkCache()
 
 LinkCache::~LinkCache()
 {
-    if (m_nl_sock != NULL)
+    if (m_nl_sock != nullptr)
     {
         nl_close(m_nl_sock);
         nl_socket_free(m_nl_sock);
@@ -60,12 +60,12 @@ string LinkCache::ifindexToName(int ifindex)
 #define MAX_ADDR_SIZE 128
     char addrStr[MAX_ADDR_SIZE + 1] = {0};
 
-    if (rtnl_link_i2name(m_link_cache, ifindex, addrStr, MAX_ADDR_SIZE) == NULL)
+    if (rtnl_link_i2name(m_link_cache, ifindex, addrStr, MAX_ADDR_SIZE) == nullptr)
     {
         /* Trying to refill cache */
         nl_cache_refill(m_nl_sock ,m_link_cache);
         if (rtnl_link_i2name(m_link_cache, ifindex,
-                             addrStr, MAX_ADDR_SIZE) == NULL)
+                             addrStr, MAX_ADDR_SIZE) == nullptr)
         {
             /* Returns ifindex as string / */
             return to_string(ifindex);

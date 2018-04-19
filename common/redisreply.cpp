@@ -1,5 +1,5 @@
-#include <string.h>
-#include <stdint.h>
+#include <cstring>
+#include <cstdint>
 #include <vector>
 #include <iostream>
 #include <system_error>
@@ -66,7 +66,7 @@ RedisReply::~RedisReply()
 redisReply *RedisReply::release()
 {
     redisReply *ret = m_reply;
-    m_reply = NULL;
+    m_reply = nullptr;
     return ret;
 }
 
@@ -85,7 +85,7 @@ redisReply *RedisReply::getChild(size_t index)
     return m_reply->element[index];
 }
 
-void RedisReply::checkStatus(char *status)
+void RedisReply::checkStatus(const char *status)
 {
     if (strcmp(m_reply->str, status) != 0)
     {
@@ -109,7 +109,7 @@ void RedisReply::checkReply()
         system_error ex(make_error_code(errc::io_error),
                            m_reply->str);
         freeReplyObject(m_reply);
-        m_reply = NULL;
+        m_reply = nullptr;
         throw ex;
     }
 }
@@ -147,7 +147,7 @@ template<> long long int RedisReply::getReply<long long int>()
 template<> string RedisReply::getReply<string>()
 {
     char *s = getContext()->str;
-    if (s == NULL) return string();
+    if (s == nullptr) return string();
     return string(s);
 }
 

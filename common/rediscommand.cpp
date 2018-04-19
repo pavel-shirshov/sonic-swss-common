@@ -7,7 +7,7 @@ using namespace std;
 namespace swss {
 
 RedisCommand::RedisCommand()
- : temp(NULL)
+ : temp(nullptr)
 {
 }
 
@@ -53,7 +53,7 @@ void RedisCommand::formatHMSET(const std::string &key,
         args.push_back(fvValue(fvt).c_str());
     }
 
-    formatArgv((int)args.size(), args.data(), NULL);
+    formatArgv((int)args.size(), args.data(), nullptr);
 }
 
 /* Format HSET key field value command */

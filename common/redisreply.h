@@ -53,7 +53,7 @@ public:
     void checkStatusQueued();
 
 private:
-    void checkStatus(char *status);
+    void checkStatus(const char *status);
     void checkReply();
 
     redisReply *m_reply;

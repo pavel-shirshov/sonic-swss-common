@@ -151,7 +151,7 @@ Logger::Priority Logger::getMinPrio()
     return getInstance().m_minPrio;
 }
 
-void Logger::settingThread()
+[[ noreturn ]] void Logger::settingThread()
 {
     Select select;
     DBConnector db(LOGLEVEL_DB, DBConnector::DEFAULT_UNIXSOCKET, 0);

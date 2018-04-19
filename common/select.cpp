@@ -2,12 +2,12 @@
 #include "common/logger.h"
 #include "common/select.h"
 #include <algorithm>
-#include <stdio.h>
+#include <cstdio>
 #include <sys/time.h>
 #include <sys/types.h>
 #include <sys/epoll.h>
 #include <unistd.h>
-#include <string.h>
+#include <cstring>
 
 using namespace std;
 
@@ -69,7 +69,7 @@ void Select::removeSelectable(Selectable *selectable)
     m_objects.erase(fd);
     m_ready.erase(selectable);
 
-    int res = ::epoll_ctl(m_epoll_fd, EPOLL_CTL_DEL, fd, NULL);
+    int res = ::epoll_ctl(m_epoll_fd, EPOLL_CTL_DEL, fd, nullptr);
     if (res == -1)
     {
         std::string error = std::string("Select::del_fd:epoll_ctl: error=("
@@ -141,7 +141,7 @@ int Select::select(Selectable **c, unsigned int timeout)
 
     int ret;
 
-    *c = NULL;
+    *c = nullptr;
     if (timeout == numeric_limits<unsigned int>::max())
         timeout = -1;
 

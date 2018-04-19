@@ -1,8 +1,8 @@
-#include <string.h>
-#include <stdint.h>
+#include <cstring>
+#include <cstdint>
 #include <vector>
 #include <unistd.h>
-#include <errno.h>
+#include <cerrno>
 #include <system_error>
 
 #include "common/dbconnector.h"

@@ -9,7 +9,7 @@
 swss::NotificationConsumer::NotificationConsumer(swss::DBConnector *db, std::string channel, int pri):
     Selectable(pri),
     m_db(db),
-    m_subscribe(NULL),
+    m_subscribe(nullptr),
     m_channel(channel)
 {
     SWSS_LOG_ENTER();

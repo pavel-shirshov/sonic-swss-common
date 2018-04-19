@@ -1,5 +1,5 @@
-#include <stdio.h>
-#include <string.h>
+#include <cstdio>
+#include <cstring>
 #include <sys/time.h>
 #include <sys/types.h>
 #include <unistd.h>
@@ -37,7 +37,7 @@ SelectableTimer::~SelectableTimer()
 void SelectableTimer::start()
 {
     // Set the timer interval and the timer is automatically started
-    int rc = timerfd_settime(m_tfd, 0, &m_interval, NULL);
+    int rc = timerfd_settime(m_tfd, 0, &m_interval, nullptr);
     if (rc == -1)
     {
         SWSS_LOG_THROW("failed to set timerfd, errno: %s", strerror(errno));
@@ -47,7 +47,7 @@ void SelectableTimer::start()
 void SelectableTimer::stop()
 {
     // Set the timer interval and the timer is automatically started
-    int rc = timerfd_settime(m_tfd, 0, &m_zero, NULL);
+    int rc = timerfd_settime(m_tfd, 0, &m_zero, nullptr);
     if (rc == -1)
     {
         SWSS_LOG_THROW("failed to set timerfd to zero, errno: %s", strerror(errno));

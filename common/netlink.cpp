@@ -1,5 +1,5 @@
-#include <string.h>
-#include <errno.h>
+#include <cstring>
+#include <cerrno>
 #include <system_error>
 #include "common/logger.h"
 #include "common/netmsg.h"
@@ -10,7 +10,7 @@ using namespace swss;
 using namespace std;
 
 NetLink::NetLink(int pri) :
-    Selectable(pri), m_socket(NULL)
+    Selectable(pri), m_socket(nullptr)
 {
     m_socket = nl_socket_alloc();
     if (!m_socket)
@@ -28,7 +28,7 @@ NetLink::NetLink(int pri) :
     {
         SWSS_LOG_ERROR("Unable to connect netlink socket: %s", nl_geterror(err));
         nl_socket_free(m_socket);
-        m_socket = NULL;
+        m_socket = nullptr;
         throw system_error(make_error_code(errc::address_not_available),
                            "Unable to connect netlink socket");
     }
@@ -40,7 +40,7 @@ NetLink::NetLink(int pri) :
 
 NetLink::~NetLink()
 {
-    if (m_socket != NULL)
+    if (m_socket != nullptr)
     {
         nl_close(m_socket);
         nl_socket_free(m_socket);
