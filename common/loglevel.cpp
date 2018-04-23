@@ -112,7 +112,7 @@ int main(int argc, char **argv)
     auto keys = redisClient.keys("*");
     for (auto& key : keys)
     {
-        size_t colonPos = key.find(":");
+        size_t colonPos = key.find(':');
         if (colonPos == std::string::npos)
         {
             continue;

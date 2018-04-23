@@ -125,7 +125,7 @@ void SubscriberStateTable::pops(deque<KeyOpFieldsValuesTuple> &vkco, string /*pr
 
         ctx = event->getContext()->element[2];
         string msg(ctx->str);
-        size_t pos = msg.find(":");
+        size_t pos = msg.find(':');
         if (pos == msg.npos)
         {
             SWSS_LOG_ERROR("invalid format %s returned for pmessage of %s", ctx->str, m_keyspace.c_str());
