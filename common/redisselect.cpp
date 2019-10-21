@@ -51,11 +51,6 @@ bool RedisSelect::hasData()
     return m_queueLength > 0;
 }
 
-bool RedisSelect::hasCachedData()
-{
-    return m_queueLength > 1;
-}
-
 bool RedisSelect::initializedWithData()
 {
     return m_queueLength > 0;

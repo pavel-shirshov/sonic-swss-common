@@ -17,7 +17,6 @@ public:
     int getFd() override;
     void readData() override;
     bool hasData() override;
-    bool hasCachedData() override;
     bool initializedWithData() override;
     void updateAfterRead() override;
 

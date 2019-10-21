@@ -19,7 +19,6 @@ public:
     /* Read keyspace event from redis */
     void readData() override;
     bool hasData() override;
-    bool hasCachedData() override;
     bool initializedWithData() override
     {
         return !m_buffer.empty();

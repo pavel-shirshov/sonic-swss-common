@@ -126,11 +126,8 @@ int Select::poll_descriptors(Selectable **c, unsigned int timeout)
 
         *c = sel;
 
-        if (sel->hasCachedData())
-        {
-            // reinsert Selectable back to the m_ready set, when there're more messages in the cache
-            m_ready.insert(sel);
-        }
+        // reinsert Selectable back to the m_ready set, when there're more messages in the cache
+        m_ready.insert(sel);
 
         sel->updateAfterRead();
 
